@@ -32,17 +32,22 @@
             width: 100%;
         }
 
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
         .logo {
-            width: 200px;
+            width: 85px;
             height: auto;
-            margin-bottom: 1.5rem;
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 700;
             color: #1a1a2e;
-            margin-bottom: 0.5rem;
         }
 
         .tagline {
@@ -128,8 +133,10 @@
 </head>
 <body>
     <main>
-        <img src="artwork/datalotl_trans.png" alt="Datalotl LLC Logo" class="logo">
-        <h1>datalotl</h1>
+        <div class="brand">
+            <h1>datalotl</h1>
+            <img src="artwork/datalotl_trans.png" alt="Datalotl LLC Logo" class="logo">
+        </div>
         <p class="tagline">Consulting, Education, and Entertainment</p>
 
         <div class="contact-section">
