@@ -129,9 +129,31 @@
             font-size: 0.8rem;
             color: #999;
         }
+
+        .lang-toggle {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.4rem 0.75rem;
+            background: #5b6abf;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            width: auto;
+            z-index: 100;
+        }
+
+        .lang-toggle:hover {
+            background: #4a58a8;
+        }
     </style>
 </head>
 <body>
+    <button class="lang-toggle" id="lang-toggle" onclick="toggleLang()">ES</button>
     <main>
         <div class="brand">
             <h1>datalotl</h1>
@@ -172,18 +194,77 @@
     </footer>
 
     <script>
+        var currentLang = 'en';
+
+        var translations = {
+            en: {
+                title: 'datalotl - Consulting, Education, and Entertainment',
+                tagline: 'Consulting, Education, and Entertainment',
+                getInTouch: 'Get in Touch',
+                name: 'Name',
+                email: 'Email',
+                interestedIn: 'Interested In',
+                message: 'Message',
+                send: 'Send Message',
+                consulting: 'Consulting',
+                education: 'Education',
+                generalInquiry: 'General Inquiry',
+                footer: '\u00a9 2025-2026 Datalotl LLC. All rights reserved.',
+                inquiry: 'Inquiry from'
+            },
+            es: {
+                title: 'datalotl - Consultor\u00eda, Educaci\u00f3n y Entretenimiento',
+                tagline: 'Consultor\u00eda, Educaci\u00f3n y Entretenimiento',
+                getInTouch: 'Cont\u00e1ctenos',
+                name: 'Nombre',
+                email: 'Correo electr\u00f3nico',
+                interestedIn: 'Interesado en',
+                message: 'Mensaje',
+                send: 'Enviar mensaje',
+                consulting: 'Consultor\u00eda',
+                education: 'Educaci\u00f3n',
+                generalInquiry: 'Consulta general',
+                footer: '\u00a9 2025-2026 Datalotl LLC. Todos los derechos reservados.',
+                inquiry: 'Consulta de'
+            }
+        };
+
+        function toggleLang() {
+            currentLang = currentLang === 'en' ? 'es' : 'en';
+            var t = translations[currentLang];
+
+            document.documentElement.lang = currentLang;
+            document.title = t.title;
+            document.querySelector('.tagline').textContent = t.tagline;
+            document.querySelector('.contact-section h2').textContent = t.getInTouch;
+            document.querySelector('label[for="name"]').textContent = t.name;
+            document.querySelector('label[for="email"]').textContent = t.email;
+            document.querySelector('label[for="interest"]').textContent = t.interestedIn;
+            document.querySelector('label[for="message"]').textContent = t.message;
+            document.querySelector('#contact-form button').textContent = t.send;
+            document.querySelector('footer').innerHTML = t.footer;
+
+            var options = document.getElementById('interest').options;
+            options[0].textContent = t.consulting;
+            options[1].textContent = t.education;
+            options[2].textContent = t.generalInquiry;
+
+            document.getElementById('lang-toggle').textContent = currentLang === 'en' ? 'ES' : 'EN';
+        }
+
         document.getElementById('contact-form').addEventListener('submit', function(e) {
             e.preventDefault();
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const interest = document.getElementById('interest').value;
-            const message = document.getElementById('message').value;
+            var t = translations[currentLang];
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
+            var interest = document.getElementById('interest').value;
+            var message = document.getElementById('message').value;
 
-            const subject = encodeURIComponent(interest + ' Inquiry from ' + name);
-            const body = encodeURIComponent(
-                'Name: ' + name + '\n' +
-                'Email: ' + email + '\n' +
-                'Interest: ' + interest + '\n\n' +
+            var subject = encodeURIComponent(interest + ' ' + t.inquiry + ' ' + name);
+            var body = encodeURIComponent(
+                t.name + ': ' + name + '\n' +
+                t.email + ': ' + email + '\n' +
+                t.interestedIn + ': ' + interest + '\n\n' +
                 message
             );
 
